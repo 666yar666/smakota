@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smakota - Тортики & Тістечка</title>
+    <link rel="stylesheet" href="pr8.css">
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <header class="header">
+            <h1>Тортики <span class="accent">&</span> Тістечка</h1>
+        </header>
+
+        <aside class="sidebar">
+            <div class="calorie-filter">
+                <p>Максимум до калорій: <span id="calorie-display" style="font-weight: bold; color: #e91e63;">400</span> кКал</p>
+                <input type="range" id="calorie-slider" min="0" max="600" value="600" class="slider">
+            </div>
+            
+            <nav class="categories">
+                <button class="filter-btn" data-filter="pirog">Пиріг</button>
+                <button class="filter-btn" data-filter="rulet">Рулет</button>
+                <button class="filter-btn" data-filter="syrniki">Сирники</button>
+                <button class="filter-btn" data-filter="tistechko">Тістечко</button>
+                <button class="filter-btn" data-filter="tort">Торт</button>
+                <button class="reset-btn" id="reset-filters">Скинути фільтр</button>
+            </nav>
+        </aside>
+
+        <main class="gallery">
+            <article class="card" data-category="tort" data-calories="265">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Торт Сметанковий">
+                </div>
+                <div class="card-content">
+                    <h3>Торт: Сметанковий</h3>
+                    <div class="card-footer">
+                        <p>Калорії: 265 кКал</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-category="tistechko" data-calories="305">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Тістечко Мафін">
+                </div>
+                <div class="card-content">
+                    <h3>Тістечко: Мафін</h3>
+                    <div class="card-footer">
+                        <p>Калорії: 305 кКал</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-category="syrniki" data-calories="450">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1567327613485-fbc7bf196198?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Сирники Три ягоди">
+                </div>
+                <div class="card-content">
+                    <h3>Сирники: Три ягоди</h3>
+                    <div class="card-footer">
+                        <p>Калорії: 450 кКал</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-category="tort" data-calories="523">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Торт Смачний">
+                </div>
+                <div class="card-content">
+                    <h3>Торт: Смачний</h3>
+                    <div class="card-footer">
+                        <p>Калорії: 523 кКал</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-category="rulet" data-calories="380">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1534432182912-63863115e106?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Рулет Святковий">
+                </div>
+                <div class="card-content">
+                    <h3>Рулет: Святковий</h3>
+                    <div class="card-footer">
+                        <p>Калорії: 380 кКал</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-category="pirog" data-calories="298">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Пиріг Свято у бабусі">
+                </div>
+                <div class="card-content">
+                    <h3>Пиріг: Свято у бабусі</h3>
+                    <div class="card-footer">
+                        <p>Калорії: 298 кКал</p>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <footer class="footer">
+            <div class="contacts">Контакти: tortik@smakota.ua</div>
+            <div class="copyright">© 2024 Smakota</div>
+        </footer>
+    </div>
+
+    <script>
+        const cards = document.querySelectorAll('.card');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const resetBtn = document.getElementById('reset-filters');
+        const slider = document.getElementById('calorie-slider');
+        const calorieDisplay = document.getElementById('calorie-display');
+        let currentCategory = 'all';
+        let currentMaxCalories = 600; 
+        function filterCards() {
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                const cardCalories = parseInt(card.getAttribute('data-calories'));
+                const categoryMatch = (currentCategory === 'all') || (cardCategory === currentCategory);
+                const calorieMatch = cardCalories <= currentMaxCalories;
+                if (categoryMatch && calorieMatch) {
+                    card.style.display = 'flex'; 
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.getAttribute('data-filter');
+                filterCards();
+            });
+        });
+
+        slider.addEventListener('input', function() {
+            calorieDisplay.textContent = this.value;
+            currentMaxCalories = parseInt(this.value);
+            filterCards();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            currentCategory = 'all';
+            currentMaxCalories = 600;
+            
+            slider.value = 600;
+            calorieDisplay.textContent = 600;
+            filterBtns.forEach(b => b.classList.remove('active'));
+            
+            filterCards();
+        });
+    </script>
+</body>
+</html>
